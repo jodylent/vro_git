@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>
+<workflow xmlns="http://vmware.com/vco/workflow" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://vmware.com/vco/workflow http://vmware.com/vco/workflow/Workflow-v4.xsd" root-name="item1" object-name="workflow:name=generic" id="eb2b0658-45ed-459a-acd4-1329be353d60" version="0.0.1" api-version="3.1.0" restartMode="1" resumeFromFailedMode="0">
+<display-name>
+    <![CDATA[DBaaS]]>
+</display-name>
+<position x="100.0" y="50.0"/>
+<input>
+    <param name="newDbName" type="string">
+    </param>
+    <param name="newDbSize" type="string">
+    </param>
+    <param name="database" type="SQL:Database">
+        <description>
+            <![CDATA[The database to use for the query]]>
+        </description>
+    </param>
+</input>
+<attrib name="query" type="string" read-only="false">
+    <value encoded="n">
+    </value>
+</attrib>
+<attrib name="rowsAffected" type="number" read-only="false">
+    <description>
+        <![CDATA[The number of rows affected by the query]]>
+    </description>
+</attrib>
+<workflow-item name="item0" type="end" end-mode="0">
+    <position x="524.5" y="45.40909090909091"/>
+</workflow-item>
+<workflow-item name="item1" out-name="item2" type="task">
+    <display-name>
+        <![CDATA[Create Query]]>
+    </display-name>
+    <script encoded="false">
+        <![CDATA[/*
+        VARIABLES EXPECTED AS INPUTS;
+        
+        newDbName - String  - Name of the DB to create
+        newDbPath - String - Path to DB files on the instance
+        newLogPath - String - Path to log files on the instance
+        newDbSize - String  - Name
+        
+        */
+        var newDbPath = "D:\ACIP";
+        var newLogPath = "L:\ACIP";
+        
+        var query = "CREATE DATABASE ["+newDbName+"] ON PRIMARY (NAME = N'"+newDbName+"', FILENAME =  N'"+newDbPath+"\\"+newDbSize+".mdf', SIZE = "+newDbSize+" GB, MAXSIZE = "+newDbSize+" GB, FILEGROWTH = 1024KB) LOG ON (NAME = N'"+newDbName+""+"_log', FILENAME = N'"+newLogPath+"\\"+newDbName+""+"_log.ldf', SIZE = 2048 KB, MAXSIZE = UNLIMITED, FILEGROWTH = 10%) " ;
+        
+        System.log("CREATE DB QUERY IS: " + query);
+        ]]>
+    </script>
+    <in-binding>
+        <bind name="newDbName" type="string" export-name="newDbName"/>
+        <bind name="newDbSize" type="string" export-name="newDbSize"/>
+    </in-binding>
+    <out-binding>
+        <bind name="query" type="string" export-name="query"/>
+    </out-binding>
+    <position x="204.5" y="55.40909090909091"/>
+</workflow-item>
+<workflow-item name="item2" out-name="item0" type="link" linked-workflow-id="028080808080808080808080808080809F808080013264596926189e8150e1493">
+    <display-name>
+        <![CDATA[Execute a custom query on a database]]>
+    </display-name>
+    <in-binding>
+        <bind name="database" type="SQL:Database" export-name="database">
+            <description>
+                <![CDATA[The database to use for the query]]>
+            </description>
+        </bind>
+        <bind name="query" type="string" export-name="query">
+            <description>
+                <![CDATA[The query to execute]]>
+            </description>
+        </bind>
+    </in-binding>
+    <out-binding>
+        <bind name="rowsAffected" type="number" export-name="rowsAffected">
+            <description>
+                <![CDATA[The number of rows affected by the query]]>
+            </description>
+        </bind>
+    </out-binding>
+    <description>
+        <![CDATA[Executes a custom query on a specified database and returns the number of affected rows. You can run the workflow to update, delete, and insert queries.]]>
+    </description>
+    <position x="344.5" y="55.40909090909091"/>
+</workflow-item>
+<presentation>
+    <p-param name="newDbName">
+        <desc>
+            <![CDATA[newDbName]]>
+        </desc>
+    </p-param>
+    <p-param name="newDbSize">
+        <desc>
+            <![CDATA[newDbSize]]>
+        </desc>
+        <p-qual kind="static" name="genericEnumeration" type="Array/string">
+        <![CDATA[#{#string#10#;#string#20#;#string#30#;#string#40#;#string#50#;#string#60#;#string#70#;#string#80#;#string#90#;#string#100#}#]]>
+    </p-qual>
+</p-param>
+<p-param name="database">
+    <desc>
+        <![CDATA[The database to use for the query]]>
+    </desc>
+</p-param>
+</presentation>
+</workflow>

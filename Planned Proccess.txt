@@ -1,0 +1,9 @@
+
+1	Keep a table/flat file of the workflows+ids to back up
+2	SQL SELECT the xmlContent of them out
+3	md5 the sql query result to the xml content in repo
+4	IFF (!=){
+	4a	git commit new xmlContent
+	4b	parse xmlContent
+	4a	git commit $(xmlContent.Scripts)
+} 
