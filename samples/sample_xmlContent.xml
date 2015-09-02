@@ -1,109 +1,146 @@
 <?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>
-<workflow xmlns="http://vmware.com/vco/workflow" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://vmware.com/vco/workflow http://vmware.com/vco/workflow/Workflow-v4.xsd" root-name="item1" object-name="workflow:name=generic" id="eb2b0658-45ed-459a-acd4-1329be353d60" version="0.0.1" api-version="3.1.0" restartMode="1" resumeFromFailedMode="0">
-<display-name>
-    <![CDATA[DBaaS]]>
-</display-name>
-<position x="100.0" y="50.0"/>
-<input>
-    <param name="newDbName" type="string">
-    </param>
-    <param name="newDbSize" type="string">
-    </param>
-    <param name="database" type="SQL:Database">
-        <description>
-            <![CDATA[The database to use for the query]]>
-        </description>
-    </param>
-</input>
-<attrib name="query" type="string" read-only="false">
-    <value encoded="n">
-    </value>
+<workflow xmlns="http://vmware.com/vco/workflow" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://vmware.com/vco/workflow http://vmware.com/vco/workflow/Workflow-v4.xsd" root-name="item3" object-name="workflow:name=generic" id="a6eef9fe-20e5-436e-ad9b-44207a01632a"  version="0.0.0" api-version="3.1.0" allowed-operations="vef" restartMode="0" resumeFromFailedMode="0" >
+<display-name><![CDATA[Run Dnscmd.exe]]></display-name>
+<description><![CDATA[SYNTAX
+hostname and ipAddress are strings.
+Method is either CREATE or DELETE.
+
+DESCRIPTION
+    Takes an input IP plus a hostname (non-FQDN) and checks for A and PTR
+    records, creating or deleting them as necessary. 
+
+    # Future feature: Note that CREATE will also correct/update any existing records. Be careful.]]></description>
+<position x='25.0' y='81.77272727272727'/>
+<input><param name='hostname' type='string' >
+</param>
+<param name='ipAddress' type='string' >
+</param>
+<param name='method' type='string' >
+</param>
+</input><attrib name='dnsServer' type='string' read-only='false' ><value encoded='n'><![CDATA[10.0.73.21]]></value>
+<description><![CDATA[DNS server IP or FQDN]]></description>
 </attrib>
-<attrib name="rowsAffected" type="number" read-only="false">
-    <description>
-        <![CDATA[The number of rows affected by the query]]>
-    </description>
+<attrib name='domain' type='string' read-only='false' ><value encoded='n'><![CDATA[AheadAviation.local]]></value>
+<description><![CDATA[Domain name (example.com)]]></description>
 </attrib>
-<workflow-item name="item0" type="end" end-mode="0">
-    <position x="524.5" y="45.40909090909091"/>
+<attrib name='vmUsername' type='string' read-only='false' ><value encoded='n'><![CDATA[AHEADAVIATION\svc_acip]]></value>
+<description><![CDATA[Username for the virtual machine]]></description>
+</attrib>
+<attrib name='vmPassword' type='SecureString' read-only='false' ><value encoded='n'><![CDATA[10A04656CB79941A68B65B61064631A21AF4EC72C1E592E8DC227B7D9AB67286F07EB1D747B45535398673B78AFC8F457C8]]></value>
+<description><![CDATA[Password for the virtual machine]]></description>
+</attrib>
+<attrib name='vm' type='VC:VirtualMachine' read-only='false' ><value encoded='n'><![CDATA[dunes://service.dunes.ch/CustomSDKObject?id='labacipvmw01/vm-115'&dunesName='VC:VirtualMachine']]></value>
+<description><![CDATA[Virtual machine]]></description>
+</attrib>
+<attrib name='interactiveSession' type='boolean' read-only='false' ><value encoded='n'><![CDATA[false]]></value>
+<description><![CDATA[This is set to true if the client wants an interactive session in the guest.]]></description>
+</attrib>
+<attrib name='programPath' type='string' read-only='false' ><value encoded='n'><![CDATA[C:\Windows\System32\dnscmd.exe]]></value>
+<description><![CDATA[The absolute path to the program to start. For Linux guest operating systems, /bin/bash is used to start the program.  For Solaris guest operating systems, /bin/bash is used to start the program if it exists. Otherwise /bin/sh is used. If /bin/sh is used, then the process ID returned will be that of the shell used to start the program, rather than the program itself, due to the differences in how /bin/sh and /bin/bash work. This PID will still be usable for watching the process with this API to find its exit code and elapsed time. ]]></description>
+</attrib>
+<attrib name='arguments' type='string' read-only='false' ><value encoded='n'><![CDATA[]]></value>
+<description><![CDATA[The arguments to the program. In Linux and Solaris guest operating systems, the program will be executed by a guest shell. This allows stdio redirection, but may also require that characters which must be escaped to the shell also be escaped on the command line provided. For Windows guest operating systems, prefixing the command with "cmd /c" can provide stdio redirection. ]]></description>
+</attrib>
+<attrib name='workingDirectory' type='string' read-only='false' ><value encoded='n'><![CDATA[C:\vcoPowerShell]]></value>
+<description><![CDATA[The absolute path of the working directory for the program to be run. VMware recommends explicitly setting the working directory for the program to be run. If this value is unset or is an empty string, the behavior depends on the guest operating system. For Linux guest operating systems, if this value is unset or is an empty string, the working directory will be the home directory of the user associated with the guest authentication. For other guest operating systems, if this value is unset, the behavior is unspecified. ]]></description>
+</attrib>
+<attrib name='environment' type='Array/string' read-only='false' ><description><![CDATA[An array of environment variables, specified in the guest OS notation (eg PATH=c:\bin;c:\windows\system32 or LD_LIBRARY_PATH=/usr/lib:/lib), to be set for the program being run. Note that these are not additions to the default environment variables; they define the complete set available to the program. If none are specified the values are guest dependent. ]]></description>
+</attrib>
+<attrib name='result' type='number' read-only='false' ><description><![CDATA[The pid of the program started.]]></description>
+</attrib>
+<workflow-item name='item2' out-name='item1' type='task' >
+<display-name><![CDATA[Create cmd]]></display-name>
+<script encoded='false'><![CDATA[var cmd = dnsServer+" /recordadd "+domain+" "+hostname+" /createptr A "+ipAddress;
+
+System.log("Cmd is : dnscmd.exe "+cmd)]]></script>
+<in-binding><bind name='hostname' type='string' export-name="hostname" ></bind>
+<bind name='ipAddress' type='string' export-name="ipAddress" ></bind>
+<bind name='dnsServer' type='string' export-name="dnsServer" ></bind>
+<bind name='domain' type='string' export-name="domain" ></bind>
+<bind name='method' type='string' export-name="method" ></bind>
+</in-binding><out-binding><bind name='cmd' type='string' export-name="arguments" ></bind>
+</out-binding><position x='344.5' y='91.77272727272727'/>
 </workflow-item>
-<workflow-item name="item1" out-name="item2" type="task">
-    <display-name>
-        <![CDATA[Create Query]]>
-    </display-name>
-    <script encoded="false">
-        <![CDATA[/*
-        VARIABLES EXPECTED AS INPUTS;
-        
-        newDbName - String  - Name of the DB to create
-        newDbPath - String - Path to DB files on the instance
-        newLogPath - String - Path to log files on the instance
-        newDbSize - String  - Name
-        
-        */
-        var newDbPath = "D:\ACIP";
-        var newLogPath = "L:\ACIP";
-        
-        var query = "CREATE DATABASE ["+newDbName+"] ON PRIMARY (NAME = N'"+newDbName+"', FILENAME =  N'"+newDbPath+"\\"+newDbSize+".mdf', SIZE = "+newDbSize+" GB, MAXSIZE = "+newDbSize+" GB, FILEGROWTH = 1024KB) LOG ON (NAME = N'"+newDbName+""+"_log', FILENAME = N'"+newLogPath+"\\"+newDbName+""+"_log.ldf', SIZE = 2048 KB, MAXSIZE = UNLIMITED, FILEGROWTH = 10%) " ;
-        
-        System.log("CREATE DB QUERY IS: " + query);
-        ]]>
-    </script>
-    <in-binding>
-        <bind name="newDbName" type="string" export-name="newDbName"/>
-        <bind name="newDbSize" type="string" export-name="newDbSize"/>
-    </in-binding>
-    <out-binding>
-        <bind name="query" type="string" export-name="query"/>
-    </out-binding>
-    <position x="204.5" y="55.40909090909091"/>
+<workflow-item name='item0' type='end' end-mode='0' >
+<position x='684.5' y='81.77272727272727'/>
 </workflow-item>
-<workflow-item name="item2" out-name="item0" type="link" linked-workflow-id="028080808080808080808080808080809F808080013264596926189e8150e1493">
-    <display-name>
-        <![CDATA[Execute a custom query on a database]]>
-    </display-name>
-    <in-binding>
-        <bind name="database" type="SQL:Database" export-name="database">
-            <description>
-                <![CDATA[The database to use for the query]]>
-            </description>
-        </bind>
-        <bind name="query" type="string" export-name="query">
-            <description>
-                <![CDATA[The query to execute]]>
-            </description>
-        </bind>
-    </in-binding>
-    <out-binding>
-        <bind name="rowsAffected" type="number" export-name="rowsAffected">
-            <description>
-                <![CDATA[The number of rows affected by the query]]>
-            </description>
-        </bind>
-    </out-binding>
-    <description>
-        <![CDATA[Executes a custom query on a specified database and returns the number of affected rows. You can run the workflow to update, delete, and insert queries.]]>
-    </description>
-    <position x="344.5" y="55.40909090909091"/>
+<workflow-item name='item1' out-name='item0' type='link' linked-workflow-id='C98080808080808080808080808080805E80808001322751030482b80adf61e7c' >
+<display-name><![CDATA[Run program in guest]]></display-name>
+<in-binding><bind name='vmUsername' type='string' export-name="vmUsername" ><description><![CDATA[Username for the virtual machine]]></description>
+</bind>
+<bind name='vmPassword' type='SecureString' export-name="vmPassword" ><description><![CDATA[Password for the virtual machine]]></description>
+</bind>
+<bind name='vm' type='VC:VirtualMachine' export-name="vm" ><description><![CDATA[Virtual machine]]></description>
+</bind>
+<bind name='interactiveSession' type='boolean' export-name="interactiveSession" ><description><![CDATA[This is set to true if the client wants an interactive session in the guest.]]></description>
+</bind>
+<bind name='programPath' type='string' export-name="programPath" ><description><![CDATA[The absolute path to the program to start. For Linux guest operating systems, /bin/bash is used to start the program.  For Solaris guest operating systems, /bin/bash is used to start the program if it exists. Otherwise /bin/sh is used. If /bin/sh is used, then the process ID returned will be that of the shell used to start the program, rather than the program itself, due to the differences in how /bin/sh and /bin/bash work. This PID will still be usable for watching the process with this API to find its exit code and elapsed time. ]]></description>
+</bind>
+<bind name='arguments' type='string' export-name="arguments" ><description><![CDATA[The arguments to the program. In Linux and Solaris guest operating systems, the program will be executed by a guest shell. This allows stdio redirection, but may also require that characters which must be escaped to the shell also be escaped on the command line provided. For Windows guest operating systems, prefixing the command with "cmd /c" can provide stdio redirection. ]]></description>
+</bind>
+<bind name='workingDirectory' type='string' export-name="workingDirectory" ><description><![CDATA[The absolute path of the working directory for the program to be run. VMware recommends explicitly setting the working directory for the program to be run. If this value is unset or is an empty string, the behavior depends on the guest operating system. For Linux guest operating systems, if this value is unset or is an empty string, the working directory will be the home directory of the user associated with the guest authentication. For other guest operating systems, if this value is unset, the behavior is unspecified. ]]></description>
+</bind>
+<bind name='environment' type='Array/string' export-name="environment" ><description><![CDATA[An array of environment variables, specified in the guest OS notation (eg PATH=c:\bin;c:\windows\system32 or LD_LIBRARY_PATH=/usr/lib:/lib), to be set for the program being run. Note that these are not additions to the default environment variables; they define the complete set available to the program. If none are specified the values are guest dependent. ]]></description>
+</bind>
+</in-binding><out-binding><bind name='result' type='number' export-name="result" ><description><![CDATA[The pid of the program started.]]></description>
+</bind>
+</out-binding><description><![CDATA[Starts a program in the guest operating system.
+A process started this way can have its status queried with this API. When the process completes, its exit code and end time will be available for 5 minutes after completion.]]></description>
+<position x='504.5' y='91.77272727272727'/>
+</workflow-item>
+<workflow-item name='item3' out-name='item2' type='condition' alt-out-name='item5' comparator='0' >
+<display-name><![CDATA[Create ?]]></display-name>
+<script encoded='false'><![CDATA[//Generated by the system, cannot be edited
+return (method == "Create") ;]]></script>
+<in-binding><bind name='method' type='string' export-name="method" ></bind>
+</in-binding><condition name='method' type='string' comparator='0' label='null' ><![CDATA[Create]]></condition>
+<position x='204.5' y='81.77272727272727'/>
+</workflow-item>
+<workflow-item name='item4' type='end' end-mode='0' >
+<position x='684.5' y='145.4090909090909'/>
+</workflow-item>
+<workflow-item name='item5' out-name='item6' type='task' >
+<display-name><![CDATA[Delete cmd]]></display-name>
+<script encoded='false'><![CDATA[var cmd = dnsServer+" /recorddelete "+domain+" "+hostname+" A "+ipAddress+" /f";
+
+System.log("Cmd is : dnscmd.exe "+cmd)]]></script>
+<in-binding><bind name='hostname' type='string' export-name="hostname" ></bind>
+<bind name='ipAddress' type='string' export-name="ipAddress" ></bind>
+<bind name='dnsServer' type='string' export-name="dnsServer" ></bind>
+<bind name='domain' type='string' export-name="domain" ></bind>
+<bind name='method' type='string' export-name="method" ></bind>
+</in-binding><out-binding><bind name='cmd' type='string' export-name="arguments" ></bind>
+</out-binding><position x='204.5' y='155.4090909090909'/>
+</workflow-item>
+<workflow-item name='item6' out-name='item4' type='link' linked-workflow-id='C98080808080808080808080808080805E80808001322751030482b80adf61e7c' >
+<display-name><![CDATA[Run program in guest]]></display-name>
+<in-binding><bind name='vmUsername' type='string' export-name="vmUsername" ><description><![CDATA[Username for the virtual machine]]></description>
+</bind>
+<bind name='vmPassword' type='SecureString' export-name="vmPassword" ><description><![CDATA[Password for the virtual machine]]></description>
+</bind>
+<bind name='vm' type='VC:VirtualMachine' export-name="vm" ><description><![CDATA[Virtual machine]]></description>
+</bind>
+<bind name='interactiveSession' type='boolean' export-name="interactiveSession" ><description><![CDATA[This is set to true if the client wants an interactive session in the guest.]]></description>
+</bind>
+<bind name='programPath' type='string' export-name="programPath" ><description><![CDATA[The absolute path to the program to start. For Linux guest operating systems, /bin/bash is used to start the program.  For Solaris guest operating systems, /bin/bash is used to start the program if it exists. Otherwise /bin/sh is used. If /bin/sh is used, then the process ID returned will be that of the shell used to start the program, rather than the program itself, due to the differences in how /bin/sh and /bin/bash work. This PID will still be usable for watching the process with this API to find its exit code and elapsed time. ]]></description>
+</bind>
+<bind name='arguments' type='string' export-name="arguments" ><description><![CDATA[The arguments to the program. In Linux and Solaris guest operating systems, the program will be executed by a guest shell. This allows stdio redirection, but may also require that characters which must be escaped to the shell also be escaped on the command line provided. For Windows guest operating systems, prefixing the command with "cmd /c" can provide stdio redirection. ]]></description>
+</bind>
+<bind name='workingDirectory' type='string' export-name="workingDirectory" ><description><![CDATA[The absolute path of the working directory for the program to be run. VMware recommends explicitly setting the working directory for the program to be run. If this value is unset or is an empty string, the behavior depends on the guest operating system. For Linux guest operating systems, if this value is unset or is an empty string, the working directory will be the home directory of the user associated with the guest authentication. For other guest operating systems, if this value is unset, the behavior is unspecified. ]]></description>
+</bind>
+<bind name='environment' type='Array/string' export-name="environment" ><description><![CDATA[An array of environment variables, specified in the guest OS notation (eg PATH=c:\bin;c:\windows\system32 or LD_LIBRARY_PATH=/usr/lib:/lib), to be set for the program being run. Note that these are not additions to the default environment variables; they define the complete set available to the program. If none are specified the values are guest dependent. ]]></description>
+</bind>
+</in-binding><out-binding><bind name='result' type='number' export-name="result" ><description><![CDATA[The pid of the program started.]]></description>
+</bind>
+</out-binding><description><![CDATA[Starts a program in the guest operating system.
+A process started this way can have its status queried with this API. When the process completes, its exit code and end time will be available for 5 minutes after completion.]]></description>
+<position x='504.5' y='155.4090909090909'/>
 </workflow-item>
 <presentation>
-    <p-param name="newDbName">
-        <desc>
-            <![CDATA[newDbName]]>
-        </desc>
-    </p-param>
-    <p-param name="newDbSize">
-        <desc>
-            <![CDATA[newDbSize]]>
-        </desc>
-        <p-qual kind="static" name="genericEnumeration" type="Array/string">
-        <![CDATA[#{#string#10#;#string#20#;#string#30#;#string#40#;#string#50#;#string#60#;#string#70#;#string#80#;#string#90#;#string#100#}#]]>
-    </p-qual>
-</p-param>
-<p-param name="database">
-    <desc>
-        <![CDATA[The database to use for the query]]>
-    </desc>
-</p-param>
-</presentation>
-</workflow>
+<p-param name="hostname"><desc><![CDATA[hostname]]></desc>
+<p-qual kind="static" name="mandatory" type="boolean" ><![CDATA[true]]></p-qual></p-param>
+<p-param name="ipAddress"><desc><![CDATA[ipAddress]]></desc>
+<p-qual kind="static" name="mandatory" type="boolean" ><![CDATA[true]]></p-qual></p-param>
+<p-param name="method"><desc><![CDATA[method]]></desc>
+<p-qual kind="static" name="mandatory" type="boolean" ><![CDATA[true]]></p-qual><p-qual kind="static" name="genericEnumeration" type="Array/string" ><![CDATA[#{#string#Create#;#string#Delete#}#]]></p-qual></p-param>
+</presentation></workflow>
