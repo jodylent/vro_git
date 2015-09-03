@@ -4,11 +4,13 @@ VARIABLES EXPECTED AS INPUTS;
 workflowId -- string -- ID of the workflow to backup
 objectName -- string -- Name of the object within the flow to version control, or 'ALL'
 
+xmlString = resultRecords[0].xmlContent
+
 */
 
 var document = XMLManager.fromString(xmlString);
 
-System.log("DOCUMENT IS :  \n\n"+document)
+//System.log("DOCUMENT IS :  \n\n"+document)
 
 var nodeList = document.getElementsByTagName("workflow-item") ;
 
