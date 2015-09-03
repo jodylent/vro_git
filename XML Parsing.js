@@ -23,10 +23,18 @@ for (var i = 0 ; i < workflowItemElementList.length ; i++) {
 		for (j=0;j<workflowChildElementList.length;j++){
 			currentNode = workflowChildElementList.item(j);
 			currentName = currentNode.nodeName;
-			currentText = currentNode.textContent;
 			
-			System.log("CURRENT NODE NAME : "+currentName);
-			System.log("CONTENT IS : \n" + currentText + "\n");
+			if (currentName=="display-name"){
+				taskDisplayName = currentNode.textContent;
+
+			} else if (currentName=="script"){
+				taskScriptText = currentNode.textContent;	
+
+			}
 		}
+
+	System.log("CURRENT TASK NAME : "+taskDisplayName);
+	System.log("CONTENT IS : \n\n" + taskScriptText + "\n");
+	
 	}
 }
