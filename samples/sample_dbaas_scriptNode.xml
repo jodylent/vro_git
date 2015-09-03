@@ -1,0 +1,30 @@
+
+
+<workflow-item name="item1" out-name="item2" type="task">
+	<display-name><![CDATA[Create Query]]></display-name>
+	<script encoded="false"><![CDATA[/*
+VARIABLES EXPECTED AS INPUTS;
+
+newDbName - String  - Name of the DB to create
+newDbPath - String - Path to DB files on the instance
+newLogPath - String - Path to log files on the instance
+newDbSize - String  - Name
+
+*/
+var newDbPath = "D:\ACIP";
+var newLogPath = "L:\ACIP";
+
+var query = "CREATE DATABASE ["+newDbName+"] ON PRIMARY (NAME = N'"+newDbName+"', FILENAME =  N'"+newDbPath+"\\"+newDbSize+".mdf', SIZE = "+newDbSize+" GB, MAXSIZE = "+newDbSize+" GB, FILEGROWTH = 1024KB) LOG ON (NAME = N'"+newDbName+""+"_log', FILENAME = N'"+newLogPath+"\\"+newDbName+""+"_log.ldf', SIZE = 2048 KB, MAXSIZE = UNLIMITED, FILEGROWTH = 10%) " ;
+
+System.log("CREATE DB QUERY IS: " + query);]]>
+	</script>
+	<in-binding>
+		<bind name="newDbName" type="string" export-name="newDbName" />
+		<bind name="newDbSize" type="string" export-name="newDbSize" />
+	</in-binding>
+	<out-binding>
+		<bind name="query" type="string" export-name="query" />
+	</out-binding>
+	<position x="204.5" y="55.40909090909091" />
+</workflow-item>
+
