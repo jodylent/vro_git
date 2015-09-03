@@ -17,6 +17,11 @@ for (var i = 0 ; i < nodeList.length ; i++) {
 	if (node.getAttribute("type") == "task") {
 		var name = node.getAttribute("name") ;
 		System.log("Found node with name:  " + name) ;
-		System.log(node.textContent.length) ;
+//		System.log(node.textContent) ;
+		
+		nodeChildren = null; nodeChildren = node.getChildNodes();
+		scriptNode = null ; scriptNode = nodeChildren.getElementsByTagName("script");
+		scriptText = null ; scriptText = scriptNode.textContent;
+		System.log("FOUND SCRIPT \n\n" + scriptText)
 	}
 }
