@@ -1,10 +1,13 @@
 /*
-VARIABLES EXPECTED AS INPUTS;
+INPUTS:
 
-workflowId -- string -- ID of the workflow to backup
-objectName -- string -- Name of the object within the flow to version control, or 'ALL'
+xmlString -- string -- created from a SQL:ActiveRecord
+	e.g.: xmlString = resultRecords[0].xmlContent
 
-xmlString = resultRecords[0].xmlContent
+OUTPUTS:
+
+taskDisplayName -- string -- the name of the Scriptable Task from the workflow being backed up
+taskScriptText -- string -- the contents of the Scriptable Task as a giant text string
 
 */
 
