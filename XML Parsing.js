@@ -21,7 +21,7 @@ for (var i = 0 ; i < workflowItemElementList.length ; i++) {
 
 		var nameElement = workflowItemElement.getElementsByTagName("display-name")
 		var nameString = nameElement.textContent
-		System.log("FOUND SCRIPTABLE TASK NAMED :  " + name) ;
+		System.log("FOUND SCRIPTABLE TASK NAMED :  " + nameString) ;
 
 //		System.log("FOUND SCRIPT FOR "+name +" : \n\n" + scriptText)
 	}
