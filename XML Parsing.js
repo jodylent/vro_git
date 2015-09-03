@@ -18,11 +18,15 @@ for (var i = 0 ; i < workflowItemElementList.length ; i++) {
 	var workflowItemElement
 	workflowItemElement = workflowItemElementList.item(i) ;
 	if (workflowItemElement.getAttribute("type") == "task") {
-
-		var nameElement = workflowItemElement.getElementsByTagName("display-name")
-		var nameString = nameElement.textContent
-		System.log("FOUND SCRIPTABLE TASK NAMED :  " + nameString) ;
-
-//		System.log("FOUND SCRIPT FOR "+name +" : \n\n" + scriptText)
+		
+		workflowChildElementList = workflowItemElement.getChildNodes()
+		for (j=0;j<workflowChildElementList.length;j++){
+			currentNode = workflowChildElementList.item(j);
+			currentName = currentNode.nodeName;
+			currentText = currentNode.textContent;
+			
+			System.log("CURRENT NODE NAME : "+currentName);
+			System.log("CONTENT IS : \n" + currentText + "\n");
+		}
 	}
 }
